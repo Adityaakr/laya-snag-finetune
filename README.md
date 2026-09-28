@@ -272,6 +272,11 @@ These rules were adopted after mistakes that inflated early numbers:
 
 ---
 
+## Related
+
+- **Snag**, the reviewer this engine is for: [Adityaakr/snag](https://github.com/Adityaakr/snag). The TypeScript pipeline, the evaluator and the files in `snag-integration/` live there.
+- **Laya**, the base model: [NandhaKishorM/laya](https://github.com/NandhaKishorM/laya).
+
 ## Licence and attribution
 
 - **Laya** (base model and library) is © its authors, Apache-2.0: <https://github.com/NandhaKishorM/laya>, <https://huggingface.co/convaiinnovations/laya>. Fine-tuned weights derived from it are not distributed here.
