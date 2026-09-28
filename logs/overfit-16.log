@@ -1,0 +1,126 @@
+scripts/laya/train.py:69: RuntimeWarning: laya: this checkpoint ships invalid temperatures or values outside [0.5, 5]; using choice:11+=0.10058280825614929 -> 0.5. Treat confidence from the affected entries as uncalibrated.
+  agent = Agent(os.path.abspath(args.init) if args.init else SNAP, device="cpu")
+records 4317 unique 4720 capped 1134 | train 16 val 16 | encode 1s
+  train lengths p10 859 p50 1095 p90 1483 max 1784
+  val lengths p10 859 p50 1095 p90 1483 max 1784
+[base (as shipped, T=1)] val acc 0.562 nll 0.974 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.619
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.336
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 1.580
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.511
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+epoch 0 step 5/90 loss 0.9775 5.0s/step eta 7 min
+[epoch 0] val acc 0.562 nll 0.954 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.607
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.314
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 1.521
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.503
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+epoch 1 step 10/90 loss 0.8465 5.3s/step eta 7 min
+[epoch 1] val acc 0.562 nll 0.938 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.601
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.296
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 1.482
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.492
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+epoch 2 step 15/90 loss 0.9687 5.3s/step eta 7 min
+[epoch 2] val acc 0.562 nll 0.915 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.590
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.274
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 1.396
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.487
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+epoch 3 step 20/90 loss 0.5198 5.5s/step eta 6 min
+[epoch 3] val acc 0.562 nll 0.899 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.583
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.258
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 1.347
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.479
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+epoch 4 step 25/90 loss 0.5143 5.5s/step eta 6 min
+epoch 4 step 30/90 loss 0.9034 5.5s/step eta 6 min
+[epoch 4] val acc 0.562 nll 0.883 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.582
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.240
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 1.291
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.474
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+epoch 5 step 35/90 loss 0.8752 5.6s/step eta 5 min
+[epoch 5] val acc 0.562 nll 0.868 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.577
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.215
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 1.266
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.467
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+epoch 6 step 40/90 loss 0.8677 5.8s/step eta 5 min
+[epoch 6] val acc 0.562 nll 0.853 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.572
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.197
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 1.231
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.458
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+epoch 7 step 45/90 loss 0.5874 5.8s/step eta 4 min
+[epoch 7] val acc 0.562 nll 0.839 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.561
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.184
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 1.213
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.444
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+epoch 8 step 50/90 loss 0.4667 5.9s/step eta 4 min
+[epoch 8] val acc 0.562 nll 0.829 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.555
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.172
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 1.206
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.431
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+epoch 9 step 55/90 loss 1.3334 6.0s/step eta 3 min
+epoch 9 step 60/90 loss 0.8182 6.0s/step eta 3 min
+[epoch 9] val acc 0.562 nll 0.820 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.550
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.161
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 1.194
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.424
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+epoch 10 step 65/90 loss 0.7484 6.2s/step eta 3 min
+[epoch 10] val acc 0.562 nll 0.813 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.547
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.153
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 1.177
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.420
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+epoch 11 step 70/90 loss 0.8157 6.3s/step eta 2 min
+[epoch 11] val acc 0.562 nll 0.809 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.542
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.147
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 1.173
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.417
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+epoch 12 step 75/90 loss 0.8309 6.5s/step eta 2 min
+[epoch 12] val acc 0.562 nll 0.805 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.541
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.141
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 1.168
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.415
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+epoch 13 step 80/90 loss 0.4192 6.5s/step eta 1 min
+[epoch 13] val acc 0.562 nll 0.804 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.540
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.140
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 1.167
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.414
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+epoch 14 step 85/90 loss 0.8052 6.6s/step eta 1 min
+epoch 14 step 90/90 loss 0.7868 6.6s/step eta 0 min
+[epoch 14] val acc 0.562 nll 0.804 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.540
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.140
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 1.165
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.414
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+[best epoch 0 with temperatures [1.0, 1.0, 3.202]] val acc 0.562 nll 0.918 balanced 0.444
+    forward.conflict             n=   3 acc 0.667 balanced 0.500 (2 classes) nll 0.649
+    forward.coverage             n=   6 acc 0.500 balanced 0.333 (3 classes) nll 1.314
+    tests.asserts_as_stated      n=   2 acc 0.000 balanced 0.000 (1 classes) nll 0.910
+    tests.asserts_differently    n=   5 acc 0.800 balanced 0.500 (2 classes) nll 0.607
+    recall by class: forward.conflict=no 0.00 (n=1), forward.conflict=yes 1.00 (n=2), forward.coverage=0 0.00 (n=1), forward.coverage=2 0.00 (n=2), forward.coverage=3 1.00 (n=3), tests.asserts_as_stated=no 0.00 (n=2), tests.asserts_differently=no 0.00 (n=1), tests.asserts_differently=yes 1.00 (n=4)
+saved .laya/remit-laya-overfit

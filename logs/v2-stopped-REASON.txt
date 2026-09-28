@@ -1,0 +1,1 @@
+stopped at step 90/394 (2h12m); confirmed D-id and twin-count shortcuts; loss flat 1.42-1.44 from step 50; no resumable checkpoint in the trainer

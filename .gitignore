@@ -1,0 +1,7 @@
+.venv/
+.laya/
+__pycache__/
+*.pyc
+.DS_Store
+*.safetensors
+*.pt

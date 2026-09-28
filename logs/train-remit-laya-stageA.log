@@ -1,0 +1,49 @@
+scripts/laya/train.py:72: RuntimeWarning: laya: this checkpoint ships invalid temperatures or values outside [0.5, 5]; using choice:11+=0.10058280825614929 -> 0.5. Treat confidence from the affected entries as uncalibrated.
+  agent = Agent(os.path.abspath(args.init) if args.init else SNAP, device="cpu")
+records 4211 unique 4610 capped 1114 | train 794 val 320 | encode 1s
+manifest .laya/runs/remit-laya-stageA/manifest.json dataset b47378da47ce rejected {}
+  train lengths p10 848 p50 1211 p90 1695 max 2175
+  val lengths p10 967 p50 1276 p90 1628 max 1986
+[base (as shipped, T=1)] val acc 0.234 nll 1.306 balanced 0.447
+    forward.conflict             n=  80 acc 0.062 balanced 0.500 (2 classes) nll 1.235
+    forward.coverage             n=  80 acc 0.388 balanced 0.287 (3 classes) nll 1.820
+    tests.asserts_as_stated      n=  80 acc 0.438 balanced 0.500 (2 classes) nll 0.948
+    tests.asserts_differently    n=  80 acc 0.050 balanced 0.500 (2 classes) nll 1.221
+    recall by class: forward.conflict=no 0.00 (n=75), forward.conflict=yes 1.00 (n=5), forward.coverage=0 0.00 (n=43), forward.coverage=2 0.00 (n=1), forward.coverage=3 0.86 (n=36), tests.asserts_as_stated=no 0.00 (n=45), tests.asserts_as_stated=yes 1.00 (n=35), tests.asserts_differently=no 0.00 (n=76), tests.asserts_differently=yes 1.00 (n=4)
+    accuracy by kind: forward.conflict|original 0.06 (n=80), forward.coverage|original 0.76 (n=41), forward.coverage|twin 0.00 (n=39), tests.asserts_as_stated|original 0.88 (n=40), tests.asserts_as_stated|twin 0.00 (n=40), tests.asserts_differently|original 0.05 (n=80)
+epoch 0 step 5/74 loss 1.0656 13.6s/step eta 16 min
+epoch 0 step 10/74 loss 1.0498 14.6s/step eta 16 min
+epoch 0 step 15/74 loss 0.9912 15.8s/step eta 16 min
+epoch 0 step 20/74 loss 0.9619 17.0s/step eta 15 min
+epoch 0 step 25/74 loss 0.9464 18.4s/step eta 15 min
+epoch 0 step 30/74 loss 0.9466 22.3s/step eta 16 min
+epoch 0 step 35/74 loss 0.9339 26.4s/step eta 17 min
+[epoch 0] val acc 0.250 nll 0.889 balanced 0.458
+    forward.conflict             n=  80 acc 0.062 balanced 0.500 (2 classes) nll 0.721
+    forward.coverage             n=  80 acc 0.450 balanced 0.333 (3 classes) nll 1.407
+    tests.asserts_as_stated      n=  80 acc 0.438 balanced 0.500 (2 classes) nll 0.705
+    tests.asserts_differently    n=  80 acc 0.050 balanced 0.500 (2 classes) nll 0.722
+    recall by class: forward.conflict=no 0.00 (n=75), forward.conflict=yes 1.00 (n=5), forward.coverage=0 0.00 (n=43), forward.coverage=2 0.00 (n=1), forward.coverage=3 1.00 (n=36), tests.asserts_as_stated=no 0.00 (n=45), tests.asserts_as_stated=yes 1.00 (n=35), tests.asserts_differently=no 0.00 (n=76), tests.asserts_differently=yes 1.00 (n=4)
+    accuracy by kind: forward.conflict|original 0.06 (n=80), forward.coverage|original 0.88 (n=41), forward.coverage|twin 0.00 (n=39), tests.asserts_as_stated|original 0.88 (n=40), tests.asserts_as_stated|twin 0.00 (n=40), tests.asserts_differently|original 0.05 (n=80)
+epoch 1 step 40/74 loss 0.9379 27.2s/step eta 15 min
+epoch 1 step 45/74 loss 0.8671 26.9s/step eta 13 min
+epoch 1 step 50/74 loss 0.8841 28.8s/step eta 12 min
+epoch 1 step 55/74 loss 0.8930 29.2s/step eta 9 min
+epoch 1 step 60/74 loss 0.8746 29.0s/step eta 7 min
+epoch 1 step 65/74 loss 0.8780 28.3s/step eta 4 min
+epoch 1 step 70/74 loss 0.8799 27.6s/step eta 2 min
+[epoch 1] val acc 0.287 nll 0.876 balanced 0.478
+    forward.conflict             n=  80 acc 0.138 balanced 0.540 (2 classes) nll 0.706
+    forward.coverage             n=  80 acc 0.450 balanced 0.333 (3 classes) nll 1.387
+    tests.asserts_as_stated      n=  80 acc 0.438 balanced 0.500 (2 classes) nll 0.701
+    tests.asserts_differently    n=  80 acc 0.125 balanced 0.539 (2 classes) nll 0.708
+    recall by class: forward.conflict=no 0.08 (n=75), forward.conflict=yes 1.00 (n=5), forward.coverage=0 0.00 (n=43), forward.coverage=2 0.00 (n=1), forward.coverage=3 1.00 (n=36), tests.asserts_as_stated=no 0.00 (n=45), tests.asserts_as_stated=yes 1.00 (n=35), tests.asserts_differently=no 0.08 (n=76), tests.asserts_differently=yes 1.00 (n=4)
+    accuracy by kind: forward.conflict|original 0.14 (n=80), forward.coverage|original 0.88 (n=41), forward.coverage|twin 0.00 (n=39), tests.asserts_as_stated|original 0.88 (n=40), tests.asserts_as_stated|twin 0.00 (n=40), tests.asserts_differently|original 0.12 (n=80)
+[best epoch 1 with temperatures [1.0, 2.259, 5.0]] val acc 0.287 nll 0.868 balanced 0.478
+    forward.conflict             n=  80 acc 0.138 balanced 0.540 (2 classes) nll 0.696
+    forward.coverage             n=  80 acc 0.450 balanced 0.333 (3 classes) nll 1.385
+    tests.asserts_as_stated      n=  80 acc 0.438 balanced 0.500 (2 classes) nll 0.695
+    tests.asserts_differently    n=  80 acc 0.125 balanced 0.539 (2 classes) nll 0.696
+    recall by class: forward.conflict=no 0.08 (n=75), forward.conflict=yes 1.00 (n=5), forward.coverage=0 0.00 (n=43), forward.coverage=2 0.00 (n=1), forward.coverage=3 1.00 (n=36), tests.asserts_as_stated=no 0.00 (n=45), tests.asserts_as_stated=yes 1.00 (n=35), tests.asserts_differently=no 0.08 (n=76), tests.asserts_differently=yes 1.00 (n=4)
+    accuracy by kind: forward.conflict|original 0.14 (n=80), forward.coverage|original 0.88 (n=41), forward.coverage|twin 0.00 (n=39), tests.asserts_as_stated|original 0.88 (n=40), tests.asserts_as_stated|twin 0.00 (n=40), tests.asserts_differently|original 0.12 (n=80)
+saved .laya/remit-laya-stageA

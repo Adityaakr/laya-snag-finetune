@@ -1,0 +1,37 @@
+scripts/laya/train.py:65: RuntimeWarning: laya: this checkpoint ships invalid temperatures or values outside [0.5, 5]; using choice:11+=0.10058280825614929 -> 0.5. Treat confidence from the affected entries as uncalibrated.
+  agent = Agent(SNAP, device="cpu")
+records 4317 unique 4720 capped 2304 | train 2911 val 1028 | encode 22s
+  train lengths p10 754 p50 1437 p90 3447 max 4096
+  val lengths p10 776 p50 1496 p90 3435 max 4084
+[base (as shipped, T=1)] val acc 0.260 nll 1.641 balanced 0.380
+    claims.about                 n=   8 acc 0.375 balanced 0.375 (1 classes) nll 1.395
+    claims.claims_deferred       n=   8 acc 1.000 balanced 1.000 (1 classes) nll 0.518
+    claims.claims_done           n=   8 acc 0.750 balanced 0.750 (1 classes) nll 0.564
+    forward.conflict             n= 154 acc 0.052 balanced 0.500 (2 classes) nll 1.249
+    forward.coverage             n= 153 acc 0.340 balanced 0.255 (3 classes) nll 1.806
+    forward.evidence             n= 143 acc 0.252 balanced 0.290 (2 classes) nll 2.453
+    reverse.behavior_change      n=   4 acc 0.500 balanced 0.500 (2 classes) nll 0.760
+    reverse.loosens_test         n=   4 acc 0.000 balanced 0.000 (1 classes) nll 0.765
+    reverse.plumbing             n=   4 acc 0.000 balanced 0.000 (1 classes) nll 0.754
+    reverse.serves               n=  80 acc 0.338 balanced 0.182 (2 classes) nll 1.511
+    tests.asserts_as_stated      n= 157 acc 0.497 balanced 0.500 (2 classes) nll 0.849
+    tests.asserts_differently    n= 157 acc 0.064 balanced 0.500 (2 classes) nll 1.248
+    tests.test_evidence          n= 148 acc 0.250 balanced 0.314 (2 classes) nll 2.625
+epoch 0 step 5/394 loss 1.5691 70.0s/step eta 454 min
+epoch 0 step 10/394 loss 1.6152 76.6s/step eta 490 min
+epoch 0 step 15/394 loss 1.5606 75.9s/step eta 479 min
+epoch 0 step 20/394 loss 1.5388 72.0s/step eta 449 min
+epoch 0 step 25/394 loss 1.5195 73.9s/step eta 454 min
+epoch 0 step 30/394 loss 1.5122 75.9s/step eta 460 min
+epoch 0 step 35/394 loss 1.4714 76.1s/step eta 455 min
+epoch 0 step 40/394 loss 1.4559 78.3s/step eta 462 min
+epoch 0 step 45/394 loss 1.4306 78.7s/step eta 457 min
+epoch 0 step 50/394 loss 1.4193 80.9s/step eta 464 min
+epoch 0 step 55/394 loss 1.4209 82.2s/step eta 464 min
+epoch 0 step 60/394 loss 1.4260 81.7s/step eta 455 min
+epoch 0 step 65/394 loss 1.4318 80.9s/step eta 443 min
+epoch 0 step 70/394 loss 1.4420 80.1s/step eta 432 min
+epoch 0 step 75/394 loss 1.4329 79.2s/step eta 421 min
+epoch 0 step 80/394 loss 1.4378 78.4s/step eta 410 min
+epoch 0 step 85/394 loss 1.4256 78.4s/step eta 404 min
+epoch 0 step 90/394 loss 1.4194 78.2s/step eta 396 min

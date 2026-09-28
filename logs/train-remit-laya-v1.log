@@ -1,0 +1,153 @@
+scripts/laya/train.py:64: RuntimeWarning: laya: this checkpoint ships invalid temperatures or values outside [0.5, 5]; using choice:11+=0.10058280825614929 -> 0.5. Treat confidence from the affected entries as uncalibrated.
+  agent = Agent(SNAP, device="cpu")
+records 4317 unique 3325 capped 2480 | train 3227 val 1022 | encode 25s
+  train lengths p10 803 p50 1525 p90 3411 max 4096
+  val lengths p10 929 p50 1568 p90 3376 max 4089
+[base (as shipped, T=1)] val acc 0.436 nll 1.316
+    claims.about                 n=   8 acc 0.375 nll 1.395
+    claims.claims_deferred       n=   8 acc 1.000 nll 0.518
+    claims.claims_done           n=   8 acc 0.750 nll 0.564
+    forward.conflict             n= 149 acc 0.060 nll 1.253
+    forward.coverage             n= 148 acc 0.676 nll 1.213
+    forward.evidence             n= 144 acc 0.458 nll 1.863
+    reverse.behavior_change      n=   4 acc 0.500 nll 0.760
+    reverse.loosens_test         n=   4 acc 0.000 nll 0.765
+    reverse.plumbing             n=   4 acc 0.000 nll 0.754
+    reverse.serves               n=  80 acc 0.388 nll 1.473
+    tests.asserts_as_stated      n= 158 acc 0.873 nll 0.433
+    tests.asserts_differently    n= 158 acc 0.051 nll 1.246
+    tests.test_evidence          n= 149 acc 0.503 nll 2.006
+epoch 0 step 5/458 loss 1.3964 57.0s/step eta 430 min
+epoch 0 step 10/458 loss 1.3958 58.9s/step eta 440 min
+epoch 0 step 15/458 loss 1.3810 60.1s/step eta 443 min
+epoch 0 step 20/458 loss 1.3241 59.1s/step eta 431 min
+epoch 0 step 25/458 loss 1.2976 59.9s/step eta 433 min
+epoch 0 step 30/458 loss 1.2859 60.3s/step eta 430 min
+epoch 0 step 35/458 loss 1.2877 60.6s/step eta 427 min
+epoch 0 step 40/458 loss 1.2619 60.2s/step eta 419 min
+epoch 0 step 45/458 loss 1.2714 60.0s/step eta 413 min
+epoch 0 step 50/458 loss 1.2559 60.2s/step eta 409 min
+epoch 0 step 55/458 loss 1.2497 60.0s/step eta 403 min
+epoch 0 step 60/458 loss 1.2344 60.0s/step eta 398 min
+epoch 0 step 65/458 loss 1.2050 60.2s/step eta 394 min
+epoch 0 step 70/458 loss 1.1968 59.8s/step eta 387 min
+epoch 0 step 75/458 loss 1.1982 59.8s/step eta 382 min
+epoch 0 step 80/458 loss 1.1932 59.6s/step eta 375 min
+epoch 0 step 85/458 loss 1.1831 59.6s/step eta 370 min
+epoch 0 step 90/458 loss 1.1670 59.5s/step eta 365 min
+epoch 0 step 95/458 loss 1.1496 59.9s/step eta 362 min
+epoch 0 step 100/458 loss 1.1391 60.0s/step eta 358 min
+epoch 0 step 105/458 loss 1.1386 60.1s/step eta 353 min
+epoch 0 step 110/458 loss 1.1298 60.1s/step eta 348 min
+epoch 0 step 115/458 loss 1.1172 60.1s/step eta 343 min
+epoch 0 step 120/458 loss 1.1117 60.2s/step eta 339 min
+epoch 0 step 125/458 loss 1.1073 60.3s/step eta 335 min
+epoch 0 step 130/458 loss 1.1010 60.4s/step eta 330 min
+epoch 0 step 135/458 loss 1.0948 60.4s/step eta 325 min
+epoch 0 step 140/458 loss 1.0837 60.4s/step eta 320 min
+epoch 0 step 145/458 loss 1.0779 60.4s/step eta 315 min
+epoch 0 step 150/458 loss 1.0669 63.6s/step eta 327 min
+epoch 0 step 155/458 loss 1.0600 63.6s/step eta 321 min
+epoch 0 step 160/458 loss 1.0461 63.9s/step eta 317 min
+epoch 0 step 165/458 loss 1.0451 64.3s/step eta 314 min
+epoch 0 step 170/458 loss 1.0397 64.6s/step eta 310 min
+epoch 0 step 175/458 loss 1.0282 64.9s/step eta 306 min
+epoch 0 step 180/458 loss 1.0222 64.9s/step eta 300 min
+epoch 0 step 185/458 loss 1.0145 64.9s/step eta 295 min
+epoch 0 step 190/458 loss 1.0065 65.1s/step eta 291 min
+epoch 0 step 195/458 loss 0.9991 65.1s/step eta 285 min
+epoch 0 step 200/458 loss 0.9928 64.8s/step eta 279 min
+epoch 0 step 205/458 loss 0.9860 64.8s/step eta 273 min
+epoch 0 step 210/458 loss 0.9818 64.9s/step eta 268 min
+epoch 0 step 215/458 loss 0.9786 64.6s/step eta 262 min
+epoch 0 step 220/458 loss 0.9720 64.6s/step eta 256 min
+epoch 0 step 225/458 loss 0.9677 64.6s/step eta 251 min
+[epoch 0] val acc 0.751 nll 0.890
+    claims.about                 n=   8 acc 0.250 nll 1.571
+    claims.claims_deferred       n=   8 acc 0.500 nll 0.669
+    claims.claims_done           n=   8 acc 0.625 nll 0.575
+    forward.conflict             n= 149 acc 0.940 nll 0.297
+    forward.coverage             n= 148 acc 0.878 nll 0.575
+    forward.evidence             n= 144 acc 0.667 nll 1.701
+    reverse.behavior_change      n=   4 acc 0.500 nll 0.804
+    reverse.loosens_test         n=   4 acc 0.750 nll 0.693
+    reverse.plumbing             n=   4 acc 1.000 nll 0.551
+    reverse.serves               n=  80 acc 0.400 nll 1.635
+    tests.asserts_as_stated      n= 158 acc 0.418 nll 0.857
+    tests.asserts_differently    n= 158 acc 0.943 nll 0.291
+    tests.test_evidence          n= 149 acc 0.906 nll 1.292
+epoch 1 step 230/458 loss 1.1479 65.9s/step eta 250 min
+epoch 1 step 235/458 loss 0.7065 65.9s/step eta 245 min
+epoch 1 step 240/458 loss 0.6675 65.7s/step eta 239 min
+epoch 1 step 245/458 loss 0.6530 65.6s/step eta 233 min
+epoch 1 step 250/458 loss 0.6795 65.4s/step eta 227 min
+epoch 1 step 255/458 loss 0.6773 65.3s/step eta 221 min
+epoch 1 step 260/458 loss 0.6543 65.1s/step eta 215 min
+epoch 1 step 265/458 loss 0.6704 65.0s/step eta 209 min
+epoch 1 step 270/458 loss 0.6654 64.9s/step eta 203 min
+epoch 1 step 275/458 loss 0.6541 64.7s/step eta 197 min
+epoch 1 step 280/458 loss 0.6643 64.7s/step eta 192 min
+epoch 1 step 285/458 loss 0.6576 64.5s/step eta 186 min
+epoch 1 step 290/458 loss 0.6674 64.4s/step eta 180 min
+epoch 1 step 295/458 loss 0.6730 64.2s/step eta 175 min
+epoch 1 step 300/458 loss 0.6749 64.2s/step eta 169 min
+epoch 1 step 305/458 loss 0.6809 64.2s/step eta 164 min
+epoch 1 step 310/458 loss 0.6812 64.0s/step eta 158 min
+epoch 1 step 315/458 loss 0.6786 64.0s/step eta 153 min
+epoch 1 step 320/458 loss 0.6725 63.9s/step eta 147 min
+epoch 1 step 325/458 loss 0.6786 63.9s/step eta 142 min
+epoch 1 step 330/458 loss 0.6750 63.7s/step eta 136 min
+epoch 1 step 335/458 loss 0.6737 63.7s/step eta 131 min
+epoch 1 step 340/458 loss 0.6681 63.6s/step eta 125 min
+epoch 1 step 345/458 loss 0.6683 63.5s/step eta 120 min
+epoch 1 step 350/458 loss 0.6607 63.5s/step eta 114 min
+epoch 1 step 355/458 loss 0.6496 63.5s/step eta 109 min
+epoch 1 step 360/458 loss 0.6439 63.5s/step eta 104 min
+epoch 1 step 365/458 loss 0.6512 63.4s/step eta 98 min
+epoch 1 step 370/458 loss 0.6486 63.3s/step eta 93 min
+epoch 1 step 375/458 loss 0.6563 63.2s/step eta 87 min
+epoch 1 step 380/458 loss 0.6598 63.2s/step eta 82 min
+epoch 1 step 385/458 loss 0.6624 63.1s/step eta 77 min
+epoch 1 step 390/458 loss 0.6636 63.1s/step eta 71 min
+epoch 1 step 395/458 loss 0.6711 62.9s/step eta 66 min
+epoch 1 step 400/458 loss 0.6709 62.8s/step eta 61 min
+epoch 1 step 405/458 loss 0.6839 62.7s/step eta 55 min
+epoch 1 step 410/458 loss 0.6802 62.7s/step eta 50 min
+epoch 1 step 415/458 loss 0.6804 62.5s/step eta 45 min
+epoch 1 step 420/458 loss 0.6770 62.5s/step eta 40 min
+epoch 1 step 425/458 loss 0.6782 62.4s/step eta 34 min
+epoch 1 step 430/458 loss 0.6768 62.3s/step eta 29 min
+epoch 1 step 435/458 loss 0.6745 62.2s/step eta 24 min
+epoch 1 step 440/458 loss 0.6709 62.2s/step eta 19 min
+epoch 1 step 445/458 loss 0.6672 62.0s/step eta 13 min
+epoch 1 step 450/458 loss 0.6634 62.0s/step eta 8 min
+epoch 1 step 455/458 loss 0.6695 61.8s/step eta 3 min
+[epoch 1] val acc 0.821 nll 0.784
+    claims.about                 n=   8 acc 0.250 nll 1.604
+    claims.claims_deferred       n=   8 acc 0.125 nll 1.009
+    claims.claims_done           n=   8 acc 1.000 nll 0.333
+    forward.conflict             n= 149 acc 0.940 nll 0.247
+    forward.coverage             n= 148 acc 0.878 nll 0.523
+    forward.evidence             n= 144 acc 0.667 nll 1.655
+    reverse.behavior_change      n=   4 acc 0.500 nll 1.116
+    reverse.loosens_test         n=   4 acc 0.750 nll 0.475
+    reverse.plumbing             n=   4 acc 1.000 nll 0.436
+    reverse.serves               n=  80 acc 0.400 nll 1.642
+    tests.asserts_as_stated      n= 158 acc 0.861 nll 0.437
+    tests.asserts_differently    n= 158 acc 0.949 nll 0.240
+    tests.test_evidence          n= 149 acc 0.906 nll 1.198
+[best epoch 1 with temperatures [1.287, 1.256, 1.028]] val acc 0.821 nll 0.765
+    claims.about                 n=   8 acc 0.250 nll 1.516
+    claims.claims_deferred       n=   8 acc 0.125 nll 0.998
+    claims.claims_done           n=   8 acc 1.000 nll 0.339
+    forward.conflict             n= 149 acc 0.940 nll 0.245
+    forward.coverage             n= 148 acc 0.878 nll 0.497
+    forward.evidence             n= 144 acc 0.667 nll 1.571
+    reverse.behavior_change      n=   4 acc 0.500 nll 1.097
+    reverse.loosens_test         n=   4 acc 0.750 nll 0.480
+    reverse.plumbing             n=   4 acc 1.000 nll 0.441
+    reverse.serves               n=  80 acc 0.400 nll 1.560
+    tests.asserts_as_stated      n= 158 acc 0.861 nll 0.439
+    tests.asserts_differently    n= 158 acc 0.949 nll 0.239
+    tests.test_evidence          n= 149 acc 0.906 nll 1.229
+saved .laya/remit-laya-v1

@@ -1,0 +1,145 @@
+# Experiment log (Laya and evaluation)
+
+Extracted verbatim from the Snag repository (`.agent/EXPERIMENTS.md`).
+
+## 2026-09-27 Laya as the Jev engine (golden, live)
+
+- Setup: local `laya-typed-decisions` (snapshot 55cf4c4e) behind scripts/laya/server.py, window 4096; extraction through OpenRouter (Opus 5.5).
+- Golden 1/18. Answers barely depend on the code:
+  - coverage `1.9`-`2.4` of `3` for done and missing requirements alike (three_reqs_one_missing: R2 done `2.14`, R3 missing `2.15`);
+  - conflict `0.55`-`0.64` for matching and contradicting code (misread_self_consistent `0.62`);
+  - asserts_as_stated and asserts_differently both `0.6`-`0.7` on the same tests.
+- The other checkpoints were no better on a hand probe (404 required, code returns 400): english coverage "fully" `0.90`, conflict `0.04`; multilingual conflict `0.38`.
+- Conclusion: not usable as shipped. Calibration cannot fix answers without discrimination. A candidate for later: fine-tune on Remit dev labels (distilled from the LLM engine).
+
+## 2026-09-27 LLM engine (jev.engine: llm), first live runs
+
+- A single probe (404 required, 400 returned) through Sonnet 5 gave conflict `0.95` and coverage "partly" `0.90`: correct.
+- Golden three_reqs_one_missing (single review): R2 done (`0.80`), R3 missing (`1.0`, P0), R1 uncertain. R1 is the extra user-need requirement from live extraction ("Add an export to the reports page."), a known over-extraction. Cost `$0.10`, 16 calls.
+- The full golden run was invalid: the OpenRouter account ran out of credits mid-run (HTTP 402). Retries opened the circuit breaker, and most items got no answers. The 402 handling is fixed (D34). Needs credits to rerun (B9).
+
+## 2026-09-27 remit-laya-v1 fine-tune (D35), epoch 0
+
+- Data: OracleJev over the mutation dev split, 3,325 unique examples; val = held-out seeds rs-semver-compare and py-retry-backoff (never trained on). Lengths up to 4,096 tokens (p90 about 3,400).
+- Training: top 6 encoder layers plus head, soft cross-entropy, bf16 on MPS, about 65 s per optimizer step (8 batches).
+- Held-out val, as shipped then after epoch 0:
+  - overall accuracy `0.436` to `0.751`, NLL `1.316` to `0.890`;
+  - forward.conflict `0.055` to `0.940`, forward.coverage `0.674` to `0.878`;
+  - tests.asserts_differently `0.050` to `0.943`, tests.test_evidence `0.446` to `0.906`.
+- Weak: tests.asserts_as_stated `0.418` and reverse.serves `0.400`. Claims are too few to judge (n=8).
+- Caveat: conflict and asserts_differently are mostly negative. The discrimination on contradicted items is measured by the mutation eval, not by this accuracy.
+
+## 2026-09-27 remit-laya-v1 end-to-end evals (local engine, $0)
+
+- Golden (scripted extraction): as shipped `1/18`, remit-laya-v1 `5/18`; requirement F1 `0.00` to `0.50`.
+- Mutations dev (all 9 seeds, 7 trained on): as shipped `0/128` correct, F1 `0.02`, PR recall `0.13`; v1 `15/128`, F1 `0.06`, PR recall `0.28`, false alarms `0.78`.
+- Held-out seeds only (rs-semver-compare, py-retry-backoff): v1 detected `1/21` targeted requirement defects; PR recall `0.26`.
+- Verdict mix (v1): missing to done `31`, contradicted to done `19`. The model learned the majority answers.
+- Diagnosis: class imbalance. Coverage targets are mostly Full, and conflict and asserts_differently mostly no (20 flips, 36 drops in all). The 82% question accuracy was largely the majority rate; per-question accuracy is the wrong selection metric.
+- Next (v2): counterfactual negatives (each done forward/tests example gets a twin with the implementing or testing units removed, so coverage None and evidence none), class-balanced sampling, balanced accuracy per question.
+
+## 2026-09-27 v2 stopped, ceiling check, mechanics check, paused for review
+
+- **v2 stopped** at step 90 of 394 (2h12m), for two reasons. The first was two confirmed training-input shortcuts: distractor ids `D*`, and twins with one fewer candidate. The second was a flat loss (1.42 to 1.44 from step 50). The trainer has no resumable checkpointing, so about 2 hours were lost. The log and launch config are in `.laya/runs/v2-stopped`. Both shortcuts are fixed (6ba07f2) and verified in the export.
+- **Eval infrastructure bug.** The per-review config cap ($0.50) was the run-wide tracker's limit, so it starved the first strategy-B run. Fixed (d677096). EVAL_MAX_USD is now the run cap, and incomplete reviews are reported.
+- **Ceiling (strategy B, Sonnet 5 as the LLM engine), 7 held-out items:** target defects flagged 6/6, 4/7 fully correct, 0 false alarms on 1 clean item, $1.10 ($0.16 per review). The task is solvable from Remit's context; Laya's discrimination is the gap.
+- **Strategy A (`single_pass`):** unmeasured. OpenRouter rejects its schema (HTTP 400, the JSON tuple for line ranges). Still open.
+- **Mechanics check FAILED:** 16 examples, 15 passes, accuracy flat at 0.562; only a shared bias moved (val NLL 0.954 to 0.839). The recipe (22 of 28 layers frozen, lr head 1e-4 and encoder 2e-5) cannot separate inputs.
+- **Paused for the user's review** of the strategy and data: `training/laya/README.md`. OpenRouter spend is $1.81 of $5.
+
+## 2026-09-27 E1 Trainer mechanics diagnosis (scripts/laya/mechanics.py)
+
+- **Observed failure:** the train.py `--overfit 16` check kept accuracy flat (0.562) while val NLL fell.
+- **Hypothesis:** broken training mechanics (gradient flow, optimizer membership, masks, precision, checkpointing, bucketing) versus insufficient learning signal.
+- **Setup:** 27 hand-written, unambiguous examples in matched pairs (training/laya/mechanics/examples.jsonl). No augmentation, no dropout, no weight decay, full-batch steps.
+- **Instrumentation (all passed):**
+  - every marker lands on a [MASK] token;
+  - noul option order is [false, true], matching the targets;
+  - all trainable tensors are in the optimizer;
+  - gradients and updates reach the top 6 layers, the head and the scorer.
+- **Results (fit at 60 steps, bf16, 22 of 28 layers frozen, lr head 1e-4 and encoder 2e-5):**
+  - plain: 27/27 by step 40;
+  - with checkpointing: 26/27;
+  - with bucketing: 26/27;
+  - with dropout: 27/27.
+  - The 5 matched contradiction pairs flip correctly (e.g. P(conflict) 0.017 for the 404 case versus 0.641 for the 400 case). Before training, the model's sensitivity to the defect was about -0.04. Decisions are identical after save and reload.
+- **Conclusion:** the mechanics are sound. The earlier "shared bias" was a per-option, input-independent offset in the scorer (a lean toward one option's text across all examples of a question type). It lowered NLL without flipping any argmax. On 16 long, subtle oracle examples, 90 small steps were too few to learn more. Decision: keep the recipe; the bottleneck is the data (E2).
+
+## 2026-09-27 Label audit (training/laya/audit/label-audit.md) and benchmark registry (docs/benchmark-registry.md)
+
+- **Twin shortcut remains.** Unpadded originals never contain other-seed units, and twins always do. Every val twin mixes Python and Rust. "Any foreign unit means missing" scores 0.875 to 0.95. Missing is taught almost only by twins.
+- **About 28% of train `asserts_differently=yes` are doubtful** (the flipped test still agrees with the requirement, or stops checking it).
+- **Conflict=no on some partial and unwire cases** that produce the opposite outcome, inconsistent with the flips.
+- **`refMatches` substring bug** (`get` matches `get_bool`).
+- **Evidence targets** spread over every implementing unit although the question asks for the most direct one.
+- **Benchmark registry:** no public benchmark scores requirement status. PAIChecker (PR-issue misalignment, manual labels, MIT) is the closest fit and contradicts corpus A's "gold is clean" on 52 of 500 gold patches. SWE-bench scores cannot be claimed for a reviewer.
+
+## 2026-09-27 Trainer repairs (evaluation semantics, manifests, resumable training)
+
+- **Evidence-style questions** (forward.evidence, tests.test_evidence, reverse.serves) are scored as "any one positive-weight unit is correct"; the loss stays distributional.
+- **Encoding writes an immutable manifest** (.laya/runs/<name>/manifest.json(l)): per-example source, seed, kind (original, twin, padded), input and target hashes, length, and class, plus tokenizer sha1, laya version, records sha1, config, rejection reasons and per-class counts. The dataset sha1 guards resumes.
+- **Nothing is truncated.** Rejections are counted by reason. The trainer refuses records from test-split seeds.
+- **Validation is reported by kind** (original, twin, padded) next to per-class recall.
+- **Resumable training:** atomic latest.pt (trainable weights, optimizer, scheduler, RNG, epoch, next batch, batch order, step, best) every --ckpt-every steps, plus best.pt. Earlier experiments are never overwritten.
+  - Tested: a run was killed (kill -9) at step 6, batch 12 of 95, then resumed with an identical dataset hash, continuing from batch 12 to step 48.
+- **Measured throughput** (focused keys, short inputs, accum 2): about 3.5 s per optimizer step on the Apple M5 GPU.
+
+## 2026-09-27 E2 Stage A Laya diagnostic (fixed, adjudicated data; 4 core questions; short inputs; 2 epochs)
+- **Hypothesis:** with the leakage removed and labels adjudicated, the verified recipe learns to discriminate on held-out seeds.
+- **Budget:** local only, 74 optimizer steps (about 25 min under contention).
+- **Result (held-out val, natural frequencies), as shipped then epoch 1 (best):**
+  - balanced accuracy 0.447 to 0.478;
+  - missing recall (coverage=0) 0/43 to 0/43;
+  - conflict=no recall 0.00 to 0.08, so conflict false positives on 92% of negatives;
+  - asserts_as_stated=no 0/45 to 0/45;
+  - coverage twins 0/39 to 0/39, original coverage 0.76 to 0.88.
+  - NLL 1.31 to 0.87: only per-question priors were learned.
+- **Decision:** FAILED the gate (useful discrimination on original held-out cases, acceptable false positives). Nothing suggests more training would help. Laya training is PAUSED; the run is preserved in .laya/runs/remit-laya-stageA (manifest, best.pt, latest.pt) and .laya/remit-laya-stageA.
+
+## 2026-09-27 E3 A vs B vs C on identical items (scripts/eval/compare.mjs, eval/results/abc-2026-09-27)
+- Held-out mutation seeds, 27 items (2 seeds). A single_pass (Sonnet 5) vs C Laya v1:
+  - target flagged 21/23 vs 3/23; strict type 16/23 vs 3/23;
+  - finding precision 21/23 vs 3/11; clean FP 0/4 vs 1/4;
+  - status correctness 101/108 vs 64/108; entire review 19/27 vs 1/27.
+- A cost $0.029 per review; latency p50 17.2 s, p95 47.5 s. First-attempt truncated-output failures 10/29, all recovered on one retry; the adapter now names the finish reason.
+- **7-item subset** (the only items with B answers; B on all 27 would cost about $3.50, over budget):
+  - A: strict 5/6, precision 6/6, entire 6/7;
+  - B after D37: strict 4/6, precision 6/6, entire 4/7;
+  - B before D37: precision 6/9 (3 false unit findings on client/retry.py);
+  - C: 0/6.
+- **Ablation on the 27 items:**
+  - A plus deterministic facts adds 2 strict catches (skip_test, weaken_assertion) and 0 false findings, at $0. KEEP.
+  - B's unit-role and model test-integrity components added 0 findings on the 7-item subset. They are not exercised there (no inject or weaken items); not measured on the 27 (budget).
+  - Requirement decomposition (A own vs remit requirements) has aggregate PR-level results only (both perfect on 7 items); not separable with the saved predictions.
+- **A on 30 SWE-bench Verified gold patches** (label clean; 11 repos, at most 3 per repo): flagged 9/30 (12 requirement findings, 7 unexplained-unit findings). Unadjudicated: PAIChecker reports 13.6% of gold patches misaligned, so some flags may be real.
+- **A's errors cluster on one seed** (py-retry-backoff, 8 of 8 imperfect reviews):
+  - missing reported as contradicted (4);
+  - partial and unwire reported as contradicted (2, both audit-disputed);
+  - "unexplained" on weakened test files (2; a real defect but the wrong finding type);
+  - false contradicted and partial on done requirements (2).
+
+## 2026-09-28 E6 Strict evaluation, adjudication, E4 and E5 (docs/eval-results-strict.md)
+- **Old to strict reconciliation, A + facts, 29 items, original labels:** precision 25/29 to 20/29 (5 type mismatches); correct-type recall 20/25 to 19/25 (rs-semver claim_all_done: status right, claim not surfaced); entire review 21/29 to 20/29 (same item). The 2 test-file unit findings are duplicates of the deterministic finding.
+- **Report dump bug:** runs over 50 items dropped passing items. C's v1 report lacked its 15 passing items; C was regenerated on the held-out seeds (eval/reports/2026-09-27T18-32-23-201Z, now with D37).
+- **Mutation label adjudication (rubric):** 9 of 12 audited held-out cases are contradicted, not missing or partial. Applied as an overlay.
+- **Real-patch adjudication:** A's 19 findings on 9 flagged gold patches: 1 valid, 1 type-mismatched, 14 false, 3 undecidable. 6 unflagged patches: 5 clean, 1 undecidable, 0 missed.
+- **E4 (evidence-consistency rule):** real-patch false findings 14 to 10, valid unchanged, no mutation change. KEEP.
+- **E5 (sp-0.3.0 extraction rule):** removed invented requirements but added 6 false fix-path findings. False 14 to 14, valid 1 to 2; with E4, 2/9. Untested on mutations (budget). NOT ADOPTED.
+- **Spend:** $4.07 of $5.
+
+## 2026-09-28 Training-label audit (all 9 dev seeds, rubric) and E7 controlled pair experiment
+- **Audit (training/laya/audit/label-audit-all.*):** 83 targeted labels: 41 agree, 36 disagree, 6 ambiguous. 18 clean done spot-checks all agree.
+  - partial_requirement 7/9 wrong (really contradicted);
+  - drop_requirement 15/36 and claim_all_done 6/9 missing labels are contradicted;
+  - unwire is never partial (5 missing, 3 contradicted);
+  - flip_condition 18/20 agree, 2 ambiguous.
+  - So v1 and Stage A trained on "missing" and "partial" labels that were wrong about half the time for those operators. This is a supported cause of the training failures, independent of model capacity.
+- **Checked pair set (training/laya/pairs/, scripts/laya/build_pairs.py):** natural matched pairs (clean vs targeted item, same requirement), rubric labels, ambiguous excluded, no twins or padding. Stage A coverage (implemented vs missing) has 27 pairs, 3 of them in the held-out seeds.
+- **Protocol (E7):** 3-fold cross-validation grouped by seed, so every pair is scored on a codebase its model never saw. Every fold starts from the shipped checkpoint. Fixed 60 full-batch steps, no selection on validation. Training duplicates are removed. Base and fine-tuned models are compared on the same pairs. The frozen test seeds are excluded.
+- **E7 result (training/laya/pairs/results-stageA-coverage-k3-s0.json):** Stage A coverage, implemented vs missing, 27 pairs each scored on an unseen codebase.
+  - Base: done 25/27, missing 0/27, pair accuracy 0/27, pair ordering 15/27.
+  - Fine-tuned: done 14/27, missing 13/27, pair accuracy 4/27, pair ordering 12/27.
+  - Training fit per fold: 13/13, 11/12, 14/17 pairs.
+  - Fine-tuning moved the bias (from always "Full" to roughly half "None") but did not add discrimination on new code; pair ordering is at chance.
+  - **Decision:** gate FAILED; do not expand. Laya fine-tuning stays paused. Per docs/plan-to-target.md Phase 3, Laya is at most a pre-filter candidate (to be measured) unless the Phase 1 data (many more independent codebases) gives a new, specific reason to retry.
+  - Caveat: 32-44 training examples per fold, so data quantity is a plausible cause, but no improvement signal justifies scaling now.
